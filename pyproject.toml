@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "monovo-python"
+version = "0.1.0"
+description = ""
+authors = ["KojiOchiai <12869331+KojiOchiai@users.noreply.github.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+numpy = "^2.0.0"
+opencv-python = "^4.10.0.84"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
