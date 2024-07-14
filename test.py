@@ -3,14 +3,14 @@ import cv2
 
 from visual_odometry import PinholeCamera, VisualOdometry
 
-
+KITTI_DATASET = '/Users/user01/projects/datasets/KITTI_grayscale/'
 cam = PinholeCamera(1241.0, 376.0, 718.8560, 718.8560, 607.1928, 185.2157)
-vo = VisualOdometry(cam, '/home/xxx/datasets/KITTI_odometry_poses/00.txt')
+vo = VisualOdometry(cam, KITTI_DATASET + 'KITTI_odometry_poses/00.txt')
 
 traj = np.zeros((600,600,3), dtype=np.uint8)
 
-for img_id in xrange(4541):
-	img = cv2.imread('/home/xxx/datasets/KITTI_odometry_gray/00/image_0/'+str(img_id).zfill(6)+'.png', 0)
+for img_id in range(4541):
+	img = cv2.imread(KITTI_DATASET + 'KITTI_odometry_gray/00/image_0/'+str(img_id).zfill(6)+'.png', 0)
 
 	vo.update(img, img_id)
 
