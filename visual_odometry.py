@@ -70,7 +70,7 @@ class VisualOdometry:
             self.cur_R = R
             self.cur_t = t
         else:
-            self.cur_t = self.cur_t + 0.8 * self.cur_R @ t 
+            self.cur_t = self.cur_t + self.cur_R @ t 
             self.cur_R = R @ self.cur_R
 
         # Add landmarks if there are only a few existing landmarks

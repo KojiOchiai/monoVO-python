@@ -28,7 +28,8 @@ for img_id in range(4541):
 	vo.update(img)
 	cur_t = vo.cur_t
 	if(img_id > 2):
-		x, y, z = cur_t[0], cur_t[1], cur_t[2]
+		k = 0.8
+		x, y, z = k * cur_t[0], k * cur_t[1], k * cur_t[2]
 	else:
 		x, y, z = 0., 0., 0.
 	draw_x, draw_y = int(x+draw_center.x), int(z+draw_center.y)
@@ -38,8 +39,8 @@ for img_id in range(4541):
 	true_x, true_y = int(trueX+draw_center.x), int(trueZ+draw_center.y)
 
 	# draw
-	cv2.circle(traj, (draw_x,draw_y), 1, draw_color(img_id), 1)
-	cv2.circle(traj, (true_x,true_y), 1, (0,0,255), 2)
+	cv2.circle(traj, (draw_x, draw_y), 1, draw_color(img_id), 1)
+	cv2.circle(traj, (true_x, true_y), 1, (0,0,255), 2)
 	cv2.rectangle(traj, (10, 20), (600, 60), (0,0,0), -1)
 	text = "Coordinates: x=%2fm y=%2fm z=%2fm"%(x,y,z)
 	cv2.putText(traj, text, (20,40), cv2.FONT_HERSHEY_PLAIN, 1, (255,255,255), 1, 8)
