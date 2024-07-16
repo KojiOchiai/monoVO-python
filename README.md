@@ -11,6 +11,7 @@ port from https://github.com/yueying/LearningVO
 
 ### Dataset
  [KITTI odometry data set (grayscale, 22 GB)](http://www.cvlibs.net/datasets/kitti/eval_odometry.php)
+ [KITTI - Odometry](https://www.kaggle.com/datasets/hocop1/kitti-odometry/data) download 00.txt
  
 ### Usage
 Modify the path in test.py to your image sequences and ground truth trajectories, then run
