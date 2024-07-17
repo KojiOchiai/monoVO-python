@@ -54,7 +54,7 @@ class VisualOdometry:
         return ref
 
     def processFrame(self):
-        # detect first landmarks
+        # detect first keypoints
         if self.px_ref is None:
             self.px_ref = self.detect_new_randmarks(self.new_frame)
             return 
@@ -73,7 +73,7 @@ class VisualOdometry:
             self.cur_t = self.cur_t + self.cur_R @ t 
             self.cur_R = R @ self.cur_R
 
-        # Add landmarks if there are only a few existing landmarks
+        # Add keypoints if there are only a few existing keypoints
         if (self.px_ref.shape[0] < kMinNumFeature):
             self.px_cur = self.detect_new_randmarks(self.new_frame)
         self.px_ref = self.px_cur
