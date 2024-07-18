@@ -29,7 +29,7 @@ for img_id in range(4541):
     cur_t = vo.cur_t
     if(img_id > 2):
         k = 0.8
-        x, y, z = k * cur_t[0], k * cur_t[1], k * cur_t[2]
+        x, y, z = k * cur_t[0][0], k * cur_t[1][0], k * cur_t[2][0]
     else:
         x, y, z = 0., 0., 0.
     draw_x, draw_y = int(x+draw_center.x), int(z+draw_center.y)
