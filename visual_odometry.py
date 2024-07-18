@@ -45,6 +45,7 @@ class VisualOdometry:
         self.cur_R = None
         self.cur_t = None
         self.px_ref = None
+        self.px_old = None
         self.px_cur = None
         self.detector = cv2.FastFeatureDetector_create(threshold=25, nonmaxSuppression=True)
 
@@ -60,23 +61,28 @@ class VisualOdometry:
             return 
 
         # tracking
-        self.px_ref, self.px_cur = featureTracking(self.last_frame, self.new_frame, self.px_ref)
-        E, mask = cv2.findEssentialMat(self.px_cur, self.px_ref,
+        self.px_ref, px_cur = featureTracking(self.last_frame, self.new_frame, self.px_ref)
+        E, mask = cv2.findEssentialMat(px_cur, self.px_ref,
                                        focal=self.cam.fx, pp=(self.cam.cx, self.cam.cy),
                                        method=cv2.RANSAC, prob=0.999, threshold=1.0)
-        _, R, t, mask = cv2.recoverPose(E, self.px_cur, self.px_ref,
+        _, R, t, mask = cv2.recoverPose(E, px_cur, self.px_ref,
                                        focal=self.cam.fx, pp=(self.cam.cx, self.cam.cy))
+        diff = np.mean(np.abs(self.px_ref - px_cur)[:])
         if self.cur_R is None:
             self.cur_R = R
             self.cur_t = t
-        else:
+        elif (1.5 < diff): # stop position update when optical flow is small
             self.cur_t = self.cur_t + self.cur_R @ t 
             self.cur_R = R @ self.cur_R
 
+        # save keypoints for draw
+        self.px_old = self.px_ref.copy()
+        self.px_cur = px_cur.copy()
+
         # Add keypoints if there are only a few existing keypoints
         if (self.px_ref.shape[0] < kMinNumFeature):
-            self.px_cur = self.detect_new_randmarks(self.new_frame)
-        self.px_ref = self.px_cur
+            px_cur = self.detect_new_randmarks(self.new_frame)
+        self.px_ref = px_cur
 
     def update(self, img: np.ndarray):
         assert(img.ndim==2 and img.shape[0]==self.cam.height and img.shape[1]==self.cam.width), \

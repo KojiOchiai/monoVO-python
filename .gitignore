@@ -133,3 +133,6 @@ dmypy.json
 
 # poetry
 *.lock
+
+# project
+frames
