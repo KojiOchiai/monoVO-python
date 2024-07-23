@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import numpy as np 
 import cv2
 
@@ -24,17 +25,14 @@ def featureTracking(image_ref, image_cur, px_ref):
 def distance(p, prev_p):
     return np.sqrt((p[0] - prev_p[0])**2 + (p[1] - prev_p[1])**2 + (p[2] - prev_p[2])**2)
 
+@dataclass(frozen=True)
 class PinholeCamera:
-    def __init__(self, width, height, fx, fy, cx, cy, 
-                k1=0.0, k2=0.0, p1=0.0, p2=0.0, k3=0.0):
-        self.width = width
-        self.height = height
-        self.fx = fx
-        self.fy = fy
-        self.cx = cx
-        self.cy = cy
-        self.distortion = (abs(k1) > 0.0000001)
-        self.d = [k1, k2, p1, p2, k3]
+    width: float
+    height: float
+    fx: float
+    fy: float
+    cx: float
+    cy: float
 
 class VisualOdometry:
     def __init__(self, cam):
